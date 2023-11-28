@@ -9,16 +9,16 @@ USE `btf`;
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_user_info`;
 CREATE TABLE `tb_user_info`  (
-                                 `id` bigint NOT NULL AUTO_INCREMENT,
-                                 `nickname` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '昵称',
-                                 `avatar` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '头像地址',
-                                 `email` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱',
-                                 `intro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '个人简介',
-                                 `website` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '个人网站',
-                                 `is_disable` tinyint(1) NULL DEFAULT NULL COMMENT '是否禁用(0-否 1-是)',
-                                 `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                                 `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-                                 PRIMARY KEY (`id`) USING BTREE
+     `id` bigint NOT NULL AUTO_INCREMENT,
+     `nickname` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '昵称',
+     `avatar` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '头像地址',
+     `email` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱',
+     `intro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '个人简介',
+     `website` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '个人网站',
+     `is_disable` tinyint(1) NULL DEFAULT NULL COMMENT '是否禁用(0-否 1-是)',
+     `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+     `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 INSERT INTO `tb_user_info` (`id`, `nickname`, `avatar`, `email`, `intro`, `website`, `is_disable`)
@@ -35,17 +35,17 @@ VALUES (3, '测试用户', 'https://www.bing.com/rp/ar_9isCNU2Q-VG1yEDDHnx8HAFQ.
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_user_auth`;
 CREATE TABLE `tb_user_auth`  (
-                                 `id` bigint NOT NULL AUTO_INCREMENT,
-                                 `user_info_id` bigint NULL DEFAULT NULL COMMENT '用户信息ID',
-                                 `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户名',
-                                 `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '密码',
-                                 `login_type` tinyint(1) NULL DEFAULT NULL COMMENT '登录类型',
-                                 `last_login_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '上次登录时间',
-                                 `ip_address` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '登录IP地址',
-                                 `ip_source` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'IP来源',
-                                 `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                                 `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-                                 PRIMARY KEY (`id`) USING BTREE
+     `id` bigint NOT NULL AUTO_INCREMENT,
+     `user_info_id` bigint NULL DEFAULT NULL COMMENT '用户信息ID',
+     `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户名',
+     `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '密码',
+     `login_type` tinyint(1) NULL DEFAULT NULL COMMENT '登录类型',
+     `last_login_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '上次登录时间',
+     `ip_address` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '登录IP地址',
+     `ip_source` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'IP来源',
+     `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+     `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 245 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 INSERT INTO `tb_user_auth` (`id`, `user_info_id`, `username`, `password`, `login_type`, `ip_address`, `ip_source`)
@@ -60,8 +60,8 @@ VALUES (3, 3, 'test', '$2a$10$FmU4jxwDlibSL9pdt.AsuODkbB4gLp3IyyXeoMmW/XALtT/Hdw
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_user_role`;
 CREATE TABLE `tb_user_role`  (
-                                 `user_id` bigint NULL DEFAULT NULL,
-                                 `role_id` bigint NULL DEFAULT NULL
+     `user_id` bigint NULL DEFAULT NULL,
+     `role_id` bigint NULL DEFAULT NULL
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 INSERT INTO `tb_user_role` VALUES (1, 1);

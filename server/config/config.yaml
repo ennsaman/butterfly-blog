@@ -1,0 +1,12 @@
+# 本地运行配置文件
+Server:
+  AppMode: debug # 环境：debug 开发环境 release 生产环境
+  BackPort: 8081 # 后台服务端口
+  FrontPort: 8082 # 前台服务端口
+
+MySQL:
+  Host: 127.0.0.1 # 地址
+  Port: "3306" # 端口
+  DataBase: btf # 库名
+  UserName: root # 账号
+  Password: "root123" # 密码

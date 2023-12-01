@@ -2,12 +2,12 @@ package test
 
 import (
 	"blog-server/config"
-	"blog-server/routes"
+	"blog-server/router"
 	"fmt"
 	"testing"
 )
 
 func TestConfig(t *testing.T) {
-	routes.InitGlobalVariable()
+	router.InitGlobalVariable()
 	fmt.Println(config.Conf.Server.BackPort)
 }

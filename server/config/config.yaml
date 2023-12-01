@@ -6,7 +6,7 @@ Server:
 
 MySQL:
   Host: 127.0.0.1 # 地址
-  Port: "3306" # 端口
+  Port: 3306 # 端口
   DataBase: btf # 库名
   UserName: root # 账号
-  Password: "root123" # 密码
+  Password: root123 # 密码

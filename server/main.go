@@ -1,6 +1,8 @@
 package main
 
-import "blog-server/routes"
+import (
+	"blog-server/routes"
+)
 
 func main() {
 	// 初始化全局变量

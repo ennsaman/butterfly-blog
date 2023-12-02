@@ -17,7 +17,7 @@ func InitMySQL() {
 		mysqlConf.Password,
 		mysqlConf.Host,
 		mysqlConf.Port,
-		mysqlConf.DateBase,
+		mysqlConf.DataBase,
 	)
 	db, err := gorm.Open(mysql.Open(dsn), gormConfig())
 	if err != nil {

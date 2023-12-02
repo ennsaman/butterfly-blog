@@ -6,7 +6,7 @@ CREATE DATABASE IF NOT EXISTS `btf` DEFAULT CHARACTER SET utf8mb4;
 USE `btf`;
 
 -- ----------------------------
--- Table structure for user_info
+-- Table structure for t_user_info
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_info`;
 CREATE TABLE `t_user_info`  (
@@ -32,7 +32,7 @@ INSERT INTO `t_user_info` (`id`, `nickname`, `avatar`, `email`, `intro`, `websit
 VALUES (3, '测试用户', 'https://www.bing.com/rp/ar_9isCNU2Q-VG1yEDDHnx8HAFQ.png', 'test@qq.com', '我是测试用户！', 'https://www.raein11.top', 0);
 
 -- ----------------------------
--- Table structure for user_auth
+-- Table structure for t_user_auth
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_auth`;
 CREATE TABLE `t_user_auth`  (
@@ -57,7 +57,7 @@ INSERT INTO `t_user_auth` (`id`, `user_info_id`, `username`, `password`, `login_
 VALUES (3, 3, 'test', '$2a$10$FmU4jxwDlibSL9pdt.AsuODkbB4gLp3IyyXeoMmW/XALtT/HdwTsi', 1, '192.168.50.31', '内网IP');
 
 -- ----------------------------
--- Table structure for user_role
+-- Table structure for t_user_role
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_role`;
 CREATE TABLE `t_user_role`  (
@@ -70,10 +70,10 @@ INSERT INTO `t_user_role` VALUES (2, 2);
 INSERT INTO `t_user_role` VALUES (3, 3);
 
 -- ----------------------------
--- Table structure for role
+-- Table structure for t_role
 -- ----------------------------
-DROP TABLE IF EXISTS `role`;
-CREATE TABLE `role`  (
+DROP TABLE IF EXISTS `t_role`;
+CREATE TABLE `t_role`  (
      `id` bigint NOT NULL AUTO_INCREMENT,
      `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '角色名',
      `label` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '角色描述',
@@ -81,9 +81,9 @@ CREATE TABLE `role`  (
      PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
-INSERT INTO `role` VALUES (1, '管理员', 'admin', 0);
-INSERT INTO `role` VALUES (2, '用户', 'user', 0);
-INSERT INTO `role` VALUES (3, '测试', 'test', 0);
+INSERT INTO `t_role` VALUES (1, '管理员', 'admin', 0);
+INSERT INTO `t_role` VALUES (2, '用户', 'user', 0);
+INSERT INTO `t_role` VALUES (3, '测试', 'test', 0);
 
 
 SET FOREIGN_KEY_CHECKS = 1;

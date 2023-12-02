@@ -1,10 +1,10 @@
 package main
 
 import (
-	"blog-server/routes"
+	"blog-server/router"
 )
 
 func main() {
 	// 初始化全局变量
-	routes.InitGlobalVariable()
+	router.InitGlobalVariable()
 }

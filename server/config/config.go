@@ -17,7 +17,7 @@ type Server struct {
 type MySQL struct {
 	Host     string
 	Port     string
-	DateBase string
+	DataBase string
 	UserName string
 	Password string
 }

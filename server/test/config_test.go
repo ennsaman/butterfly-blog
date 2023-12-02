@@ -9,5 +9,5 @@ import (
 
 func TestConfig(t *testing.T) {
 	router.InitGlobalVariable()
-	fmt.Println(config.Conf.Server.BackPort)
+	fmt.Println(config.Conf.MySQL.UserName)
 }

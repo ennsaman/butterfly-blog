@@ -5,19 +5,20 @@ import (
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 	"log"
 	"time"
 )
 
-func InitMySQL() {
+func InitMySQL() *gorm.DB {
 	mysqlConf := config.Conf.MySQL
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		mysqlConf.UserName,
 		mysqlConf.Password,
 		mysqlConf.Host,
 		mysqlConf.Port,
-		mysqlConf.DateBase,
+		mysqlConf.DataBase,
 	)
 	db, err := gorm.Open(mysql.Open(dsn), gormConfig())
 	if err != nil {
@@ -25,20 +26,27 @@ func InitMySQL() {
 	}
 	log.Println("MySQL 连接成功！")
 
-	// 数据库连接数量相关设置
+	// 获取通用数据库对象 sql.DB ，然后使用其提供的功能
 	sqlDB, _ := db.DB()
-	sqlDB.SetMaxIdleConns(5)
-	sqlDB.SetMaxOpenConns(20)
-	sqlDB.SetConnMaxLifetime(10 * time.Second)
+
+	// SetMaxIdleConns 用于设置连接池中空闲连接的最大数量。
+	sqlDB.SetMaxIdleConns(10)
+	// SetMaxOpenConns 设置打开数据库连接的最大数量。
+	sqlDB.SetMaxOpenConns(100)
+	// SetConnMaxLifetime 设置了连接可复用的最大时间。
+	sqlDB.SetConnMaxLifetime(time.Hour)
+
+	return db
 }
 
 func gormConfig() *gorm.Config {
 	return &gorm.Config{
-		SkipDefaultTransaction: true, // 跳过默认事务
+		Logger:                 logger.Default.LogMode(logger.Info), // 日志级别
+		SkipDefaultTransaction: true,                                // 跳过默认事务
 		NamingStrategy: schema.NamingStrategy{
-			TablePrefix:   "t_", // 表名前缀，“User”的表将为“t_users”
-			SingularTable: true, // 使用单数表名，“User”的表将是“user”，启用此选项后
-			NoLowerCase:   true, // 跳过名称的蛇形大小写
+			TablePrefix:   "t_",  // 表名前缀，“User”的表将为“t_users”
+			SingularTable: true,  // 使用单数表名，“User”的表将是“user”，启用此选项后
+			NoLowerCase:   false, // 跳过名称的蛇形大小写
 		},
 		DisableForeignKeyConstraintWhenMigrating: true, // 禁用特性：GORM 在 AutoMigrate 或 CreateTable 时自动创建外键约束
 	}

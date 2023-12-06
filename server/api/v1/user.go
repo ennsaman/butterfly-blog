@@ -4,6 +4,7 @@ import "github.com/gin-gonic/gin"
 
 type User struct{}
 
-func (*User) GetInfo(context *gin.Context) {
+// 获取用户信息
+func (*User) GetUserInfo(context *gin.Context) {
 
 }

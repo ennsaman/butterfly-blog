@@ -10,13 +10,13 @@ import (
 	"time"
 )
 
-var db *gorm.DB
+var DB *gorm.DB
 
 // InitGlobalVariable 初始化全局变量
 func InitGlobalVariable() {
 	utils.InitViper()
-	db = utils.InitMySQL()
-	_, err := db.DB()
+	DB = utils.InitMySQL()
+	_, err := DB.DB()
 	if err != nil {
 		fmt.Println("get *sql.DB fail：", err)
 	}

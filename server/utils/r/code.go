@@ -1,20 +1,132 @@
 package r
 
-// 响应码
+// 错误码汇总
 const (
-	SUCCESS = 200 // 成功
-	FAIL    = 400 // 失败
-	ERROR   = 500 // 错误
+	OK            = 200
+	FAIL          = 400
+	ERROR         = 500
+	UNKNOWN_ERROR = -1
+
+	// 500x 通用错误
+	ERROR_REQUEST_PARAM = 5001
+	ERROR_REQUEST_PAGE  = 5002
+	ERROR_INVALID_PARAM = 5003
+	ERROR_DB_OPE        = 5004
+
+	// 400x 文件相关错误
+	ERROR_FILE_UPLOAD  = 4001
+	EEROR_FILE_RECEIVE = 4002
+
+	// 1000x 用户模块的错误
+	ERROR_USER_NAME_USED    = 10001
+	ERROR_PASSWORD_WRONG    = 10002
+	ERROR_USER_NOT_EXIST    = 10003
+	ERROR_USER_NO_RIGHT     = 10004
+	ERROR_OLD_PASSWORD      = 10005
+	ERROR_EMAIL_SEND        = 10006
+	ERROR_EMAIL_HAS_SEND    = 10007
+	ERROR_VERIFICATION_CODE = 10008
+
+	// 1009x 鉴权相关错误
+	ERROR_TOKEN_NOT_EXIST  = 10091
+	ERROR_TOKEN_RUNTIME    = 10092
+	ERROR_TOKEN_WRONG      = 10093
+	ERROR_TOKEN_TYPE_WRONG = 10094
+	ERROR_TOKEN_CREATE     = 10095
+	ERROR_PERMI_DENIED     = 10096
+	FORCE_OFFLINE          = 10097
+	LOGOUT                 = 10098
+
+	// 2000x 文章模块的错误
+	ERROR_ART_NOT_EXIST = 20001
+
+	// 3000x 分类模块的错误
+	ERROR_CATE_NAME_USED = 30001
+	ERROR_CATE_NOT_EXIST = 30002
+	ERROR_CATE_ART_EXIST = 30003
+
+	// 4000x 标签模块的错误
+	ERROR_TAG_EXIST     = 40001
+	ERROR_TAG_NOT_EXIST = 40002
+	ERROR_TAG_ART_EXIST = 40003
+
+	// 5000x 评论模块的错误
+	ERROR_COMMENT_NOT_EXIST = 50001
+
+	// 6000x 权限模块的错误
+	ERROR_RESOURCE_NAME_EXIST   = 60001
+	ERROR_RESOURCE_NOT_EXIST    = 60002
+	ERROR_RESOURCE_USED_BY_ROLE = 60003
+	ERROR_RESOURCE_HAS_CHILDREN = 60004
+	ERROR_MENU_NAME_EXIST       = 60005
+	ERROR_MENU_NOT_EXIST        = 60006
+	ERROR_MENU_USED_BY_ROLE     = 60007
+	ERROR_MENU_HAS_CHILDREN     = 60008
+	ERROR_ROLE_NAME_EXIST       = 60010
+	ERROR_ROLE_NOT_EXIST        = 60011
+
+	// 7000x 页面模块的错误
+	ERROR_PAGE_NAME_EXIST = 70001
 )
 
-// MsgFlags 响应信息
-var MsgFlags = map[int]string{
-	SUCCESS: "成功",
-	FAIL:    "失败",
-	ERROR:   "错误",
+var codeMsg = map[int]string{
+	OK:            "成功",
+	FAIL:          "失败",
+	ERROR:         "错误",
+	UNKNOWN_ERROR: "未知错误",
+
+	ERROR_REQUEST_PARAM: "请求参数格式错误",
+	ERROR_REQUEST_PAGE:  "分页参数错误",
+	ERROR_INVALID_PARAM: "不合法的请求参数",
+	ERROR_DB_OPE:        "数据库操作异常",
+
+	EEROR_FILE_RECEIVE: "文件接收失败",
+	ERROR_FILE_UPLOAD:  "文件上传失败",
+
+	ERROR_USER_NAME_USED:    "用户名已存在",
+	ERROR_USER_NOT_EXIST:    "该用户不存在",
+	ERROR_PASSWORD_WRONG:    "密码错误",
+	ERROR_USER_NO_RIGHT:     "该用户无权限",
+	ERROR_OLD_PASSWORD:      "旧密码不正确",
+	ERROR_EMAIL_SEND:        "邮件发送失败",
+	ERROR_EMAIL_HAS_SEND:    "已朝该邮箱发送验证码（有效期 15 分钟），请检查回收站",
+	ERROR_VERIFICATION_CODE: "验证码错误",
+
+	ERROR_TOKEN_NOT_EXIST:  "TOKEN 不存在，请重新登陆",
+	ERROR_TOKEN_RUNTIME:    "TOKEN 已过期，请重新登陆",
+	ERROR_TOKEN_WRONG:      "TOKEN 不正确，请重新登陆",
+	ERROR_TOKEN_TYPE_WRONG: "TOKEN 格式错误，请重新登陆",
+	ERROR_TOKEN_CREATE:     "TOKEN 生成失败",
+	ERROR_PERMI_DENIED:     "权限不足",
+	FORCE_OFFLINE:          "您已被强制下线",
+	LOGOUT:                 "您已退出登录",
+
+	ERROR_ART_NOT_EXIST: "文章不存在",
+
+	ERROR_CATE_NAME_USED: "操作失败，分类名已存在",
+	ERROR_CATE_NOT_EXIST: "操作失败，分类不存在",
+	ERROR_CATE_ART_EXIST: "删除失败，分类下存在文章",
+
+	ERROR_TAG_EXIST:     "操作失败，标签名已存在",
+	ERROR_TAG_NOT_EXIST: "操作失败，标签不存在",
+	ERROR_TAG_ART_EXIST: "删除失败，标签下存在文章",
+
+	ERROR_COMMENT_NOT_EXIST: "评论不存在",
+
+	ERROR_RESOURCE_NAME_EXIST:   "该资源名已经存在",
+	ERROR_RESOURCE_NOT_EXIST:    "该资源不存在",
+	ERROR_RESOURCE_HAS_CHILDREN: "该资源下存在子资源，无法删除",
+	ERROR_RESOURCE_USED_BY_ROLE: "该资源正在被角色使用，无法删除",
+	ERROR_MENU_NAME_EXIST:       "该菜单名已经存在",
+	ERROR_MENU_NOT_EXIST:        "该菜单不存在",
+	ERROR_MENU_USED_BY_ROLE:     "该菜单正在被角色使用，无法删除",
+	ERROR_MENU_HAS_CHILDREN:     "该菜单下存在子菜单，无法删除",
+	ERROR_ROLE_NAME_EXIST:       "该角色名已经存在",
+	ERROR_ROLE_NOT_EXIST:        "该角色不存在",
+
+	ERROR_PAGE_NAME_EXIST: "该页面名称已经存在",
 }
 
-// GetMsg 获取响应信息
 func GetMsg(code int) string {
-	return MsgFlags[code]
+	return codeMsg[code]
 }

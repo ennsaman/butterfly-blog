@@ -2,7 +2,7 @@ package config
 
 var Conf Config
 
-// 配置文件对应结构体
+// Config 配置文件对应结构体
 type Config struct {
 	Server Server
 	MySQL  MySQL

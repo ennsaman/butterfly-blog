@@ -13,6 +13,7 @@ var (
 	validate *validator.Validate
 )
 
+// Validate 合法性检查
 func (v *ValidateUtil) Validate(data any) string {
 	ans := ""
 	validate = validator.New(validator.WithRequiredStructEnabled())

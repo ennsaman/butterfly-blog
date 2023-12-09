@@ -3,19 +3,26 @@ package router
 import (
 	"blog-server/config"
 	"blog-server/utils"
+	"fmt"
+	"gorm.io/gorm"
 	"log"
 	"net/http"
 	"time"
 )
 
-// 初始化全局变量
+var db *gorm.DB
+
+// InitGlobalVariable 初始化全局变量
 func InitGlobalVariable() {
 	utils.InitViper()
-	db := utils.InitMySQL()
-	db.DB()
+	db = utils.InitMySQL()
+	_, err := db.DB()
+	if err != nil {
+		fmt.Println("get *sql.DB fail：", err)
+	}
 }
 
-// 后台服务
+// BackendServer 后台服务
 func BackendServer() *http.Server {
 	backPort := config.Conf.Server.BackPort
 	log.Printf("后台服务启动于 %s 端口", backPort)
@@ -27,7 +34,7 @@ func BackendServer() *http.Server {
 	}
 }
 
-// 前台服务
+// FrontendServer 前台服务
 func FrontendServer() *http.Server {
 	frontPort := config.Conf.Server.FrontPort
 	log.Printf("前台服务启动于 %s 端口", frontPort)

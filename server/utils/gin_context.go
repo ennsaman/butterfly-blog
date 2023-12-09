@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-// JSON 绑定
+// BindJSON JSON 绑定
 func BindJSON[T any](context *gin.Context) (data T) {
 	err := context.ShouldBindJSON(&data)
 	if err != nil {
@@ -15,7 +15,7 @@ func BindJSON[T any](context *gin.Context) (data T) {
 	return
 }
 
-// 参数合法性校验
+// Validate 参数合法性校验
 func Validate(context *gin.Context, data any) {
 	validateAns := Validator.Validate(data)
 	if validateAns != "" {
@@ -24,7 +24,7 @@ func Validate(context *gin.Context, data any) {
 	}
 }
 
-// JSON 绑定验证 + 合法性校验
+// BindJSONAndValid JSON 绑定验证 + 合法性校验
 func BindJSONAndValid[T any](context *gin.Context) (data T) {
 	err := context.ShouldBindJSON(&data)
 	if err != nil {

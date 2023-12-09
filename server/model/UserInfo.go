@@ -2,7 +2,7 @@ package model
 
 import "time"
 
-// 用户信息模型
+// UserInfo 用户信息模型
 type UserInfo struct {
 	Id         int64     `json:"id"`
 	Nickname   string    `json:"nickname"`

@@ -1,6 +1,6 @@
 package model
 
-// 角色模型
+// Role 角色模型
 type Role struct {
 	Id        int64  `json:"id"`
 	Name      string `json:"name"`

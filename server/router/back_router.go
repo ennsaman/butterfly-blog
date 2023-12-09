@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-// 后台路由
+// BackRouter 后台路由
 func BackRouter() http.Handler {
 	router := gin.New()
 
@@ -26,5 +26,5 @@ func BackRouter() http.Handler {
 
 	}
 
-	return nil
+	return router
 }

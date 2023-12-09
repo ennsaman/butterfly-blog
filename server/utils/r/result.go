@@ -5,14 +5,14 @@ import (
 	"net/http"
 )
 
-// 响应结构体
+// Response 响应结构体
 type Response struct {
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`
 	Data any    `json:"data"`
 }
 
-// 返回 JSON 数据
+// ReturnJson 返回 JSON 数据
 func ReturnJson(c *gin.Context, httpCode int, code int, msg string, data any) {
 	// c.Header("", "") // 根据需要在头部添加其他信息
 	c.JSON(httpCode, Response{
@@ -22,27 +22,27 @@ func ReturnJson(c *gin.Context, httpCode int, code int, msg string, data any) {
 	})
 }
 
-// 语法糖函数封装
+// Send 语法糖函数封装
 func Send(c *gin.Context, httpCode int, code int, data any) {
 	ReturnJson(c, httpCode, code, GetMsg(code), data)
 }
 
-// 成功响应，无数据
+// Success 成功响应，无数据
 func Success(c *gin.Context) {
 	Send(c, http.StatusOK, SUCCESS, nil)
 }
 
-// 成功响应，有数据
+// SuccessWithData 成功响应，有数据
 func SuccessWithData(c *gin.Context, data any) {
 	Send(c, http.StatusOK, SUCCESS, data)
 }
 
-// 根据 code 获取 msg，无数据
+// SendCode 根据 code 获取 msg，无数据
 func SendCode(c *gin.Context, code int) {
 	Send(c, http.StatusOK, code, nil)
 }
 
-// 根据 code 获取 msg，有数据
+// SendCodeWithData 根据 code 获取 msg，有数据
 func SendCodeWithData(c *gin.Context, code int, data any) {
 	Send(c, http.StatusOK, code, data)
 }

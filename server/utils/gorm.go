@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+// InitMySQL 初始化 MySQL
 func InitMySQL() *gorm.DB {
 	mysqlConf := config.Conf.MySQL
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
@@ -39,6 +40,7 @@ func InitMySQL() *gorm.DB {
 	return db
 }
 
+// gormConfig gorm 配置
 func gormConfig() *gorm.Config {
 	return &gorm.Config{
 		Logger:                 logger.Default.LogMode(logger.Info), // 日志级别

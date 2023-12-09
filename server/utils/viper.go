@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-// 初始化 viper 配置
+// InitViper 初始化 viper 配置
 func InitViper() {
 	v := viper.New()
 	v.SetConfigName("config")    // 指定配置文件名

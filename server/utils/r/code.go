@@ -2,7 +2,7 @@ package r
 
 // 错误码汇总
 const (
-	OK            = 200
+	SUCCESS       = 200
 	FAIL          = 400
 	ERROR         = 500
 	UNKNOWN_ERROR = -1
@@ -70,7 +70,7 @@ const (
 )
 
 var codeMsg = map[int]string{
-	OK:            "成功",
+	SUCCESS:       "成功",
 	FAIL:          "失败",
 	ERROR:         "错误",
 	UNKNOWN_ERROR: "未知错误",

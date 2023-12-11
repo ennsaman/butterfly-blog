@@ -40,7 +40,7 @@ func (*User) Login(context *gin.Context, username, password string) (loginVo res
 	// 保存用户信息到 Session 和 Redis
 
 	// 返回
-	return
+	return userDetailDTO.LoginVo, r.SUCCESS
 }
 
 func convertUserDetailDTO(userAuth model.UserAuth, context *gin.Context) dto.UserDetailDTO {

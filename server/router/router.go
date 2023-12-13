@@ -2,25 +2,23 @@ package router
 
 import (
 	"blog-server/config"
+	"blog-server/dao"
 	"blog-server/utils"
-	"fmt"
-	"gorm.io/gorm"
 	"log"
 	"net/http"
 	"time"
 )
 
-var DB *gorm.DB
-
 // InitGlobalVariable 初始化全局变量
 func InitGlobalVariable() {
+	// 初始化 Viper
 	utils.InitViper()
+
 	utils.InitRedis()
-	DB = utils.InitMySQL()
-	_, err := DB.DB()
-	if err != nil {
-		fmt.Println("get *sql.DB fail：", err)
-	}
+
+	// 初始化数据库 DB
+	dao.DB = utils.InitMySQL()
+
 }
 
 // BackendServer 后台服务

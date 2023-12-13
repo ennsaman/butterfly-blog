@@ -7,6 +7,7 @@ type Config struct {
 	Server Server
 	MySQL  MySQL
 	Redis  Redis
+	JWT    JWT
 }
 
 type Server struct {
@@ -27,4 +28,10 @@ type Redis struct {
 	Addr     string
 	Password string
 	DB       int
+}
+
+type JWT struct {
+	Issuer     string
+	SecretKey  string
+	ExpireTime int64
 }

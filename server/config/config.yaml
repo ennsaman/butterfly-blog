@@ -10,3 +10,8 @@ MySQL:
   DataBase: btf # 库名
   UserName: root # 账号
   Password: root123 # 密码
+
+Redis:
+  Addr: localhost:6379 # 地址
+  Password: # 密码
+  DB: 11 # 库

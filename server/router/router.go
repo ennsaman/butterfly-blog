@@ -15,6 +15,7 @@ var DB *gorm.DB
 // InitGlobalVariable 初始化全局变量
 func InitGlobalVariable() {
 	utils.InitViper()
+	utils.InitRedis()
 	DB = utils.InitMySQL()
 	_, err := DB.DB()
 	if err != nil {

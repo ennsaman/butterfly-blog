@@ -6,6 +6,7 @@ var Conf Config
 type Config struct {
 	Server Server
 	MySQL  MySQL
+	Redis  Redis
 }
 
 type Server struct {
@@ -20,4 +21,10 @@ type MySQL struct {
 	DataBase string
 	UserName string
 	Password string
+}
+
+type Redis struct {
+	Addr     string
+	Password string
+	DB       int
 }

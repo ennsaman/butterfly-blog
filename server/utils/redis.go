@@ -33,3 +33,13 @@ func InitRedis() *redis.Client {
 
 	return rdb
 }
+
+// Do 执行指令
+func (*_redis) Do(args ...any) (any, error) {
+	return rdb.Do(ctx, args...), nil
+}
+
+// Keys 根据正则获取keys
+func (*_redis) Keys(pattern string) []string {
+	return rdb.Keys(ctx, pattern).Val()
+}

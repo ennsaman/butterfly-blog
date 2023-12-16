@@ -21,3 +21,10 @@ JWT:
   SecretKey: 123456 # jwt密钥
   ExpireTime: 3600  # jwt过期时间
 
+Zap:
+  Level: "error"        # 日志级别: debug, info, warn, error, dpanic, panic, fatal, 默认 info
+  Format: "console"     # 输出格式: console, json
+  Prefix: "[BTF] "      # 日志前缀
+  Directory: "log"      # 存放日志的文件夹
+  ShowLine: true        # 是否显示哪行调用
+  LogInConsole: true    # 是否输出到控制台

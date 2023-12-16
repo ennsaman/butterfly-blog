@@ -8,6 +8,7 @@ type Config struct {
 	MySQL  MySQL
 	Redis  Redis
 	JWT    JWT
+	Zap    Zap
 }
 
 type Server struct {
@@ -34,4 +35,13 @@ type JWT struct {
 	Issuer     string
 	SecretKey  string
 	ExpireTime int64
+}
+
+type Zap struct {
+	Level        string
+	Format       string
+	Prefix       string
+	Directory    string
+	ShowLine     bool
+	LogInConsole bool
 }

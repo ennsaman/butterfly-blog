@@ -7,7 +7,9 @@ import (
 	"blog-server/model/resp"
 	"blog-server/utils"
 	"blog-server/utils/r"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 type User struct{}
@@ -28,19 +30,45 @@ func (*User) Login(context *gin.Context, username, password string) (loginVo res
 	// 获取用户详细信息
 	userDetailDTO := convertUserDetailDTO(userAuth, context)
 
+	// 生成 UUID
+	uuid := utils.Encryptor.MD5(userDetailDTO.IpAddress)
 	// 生成 Token
-	token, err := utils.GetJWT().GenToken(userAuth.Id, "test")
+	token, err := utils.GetJWT().GenToken(userAuth.Id, "test", uuid)
 	if err != nil {
 		return resp.LoginVo{}, r.ERROR_TOKEN_CREATE
 	}
 	userDetailDTO.Token = token
 
 	// 更新用户登录信息
+	dao.Update(&model.UserAuth{
+		Id:        userAuth.Id,
+		IpAddress: userDetailDTO.IpAddress,
+		IpSource:  userDetailDTO.IpSource,
+	}, "ip_address", "ip_source")
 
 	// 保存用户信息到 Session 和 Redis
-
+	session := sessions.Default(context)
+	sessionInfoStr := utils.Json.Marshal(dto.SessionInfo{UserDetailDTO: userDetailDTO})
+	session.Set(KEY_USER+uuid, sessionInfoStr)
+	err = session.Save()
+	if err != nil {
+		utils.Logger.Error("保存用户信息到 Session 中失败: ", zap.Error(err))
+	}
 	// 返回
 	return userDetailDTO.LoginVo, r.SUCCESS
+}
+
+func (u *User) Logout(context *gin.Context) {
+	// 获取 UUID
+	uuid := utils.GetFromContext[string](context, "uuid")
+	// 删除 Session 中的用户信息
+	session := sessions.Default(context)
+	session.Delete(KEY_USER + uuid)
+	err := session.Save()
+	if err != nil {
+		utils.Logger.Error("删除 Session 中的用户信息失败: ", zap.Error(err))
+	}
+	// 删除 Redis 中的用户信息 TODO
 }
 
 func convertUserDetailDTO(userAuth model.UserAuth, context *gin.Context) dto.UserDetailDTO {

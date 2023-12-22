@@ -23,7 +23,7 @@ func BackRouter() http.Handler {
 	auth.Use(middleware.JWTAuth())
 
 	{
-
+		auth.GET("/logout", userAuthAPI.Logout) // 退出登录
 	}
 
 	return router

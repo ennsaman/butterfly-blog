@@ -26,5 +26,8 @@ func (*UserAuth) Login(context *gin.Context) {
 
 // Logout 退出登录
 func (*UserAuth) Logout(context *gin.Context) {
-
+	// 业务逻辑
+	userService.Logout(context)
+	// 返回数据
+	r.Success(context)
 }

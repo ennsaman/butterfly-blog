@@ -3,14 +3,14 @@ package utils
 import (
 	"blog-server/utils/r"
 	"github.com/gin-gonic/gin"
-	"log"
+	"go.uber.org/zap"
 )
 
 // BindJSON JSON 绑定
 func BindJSON[T any](context *gin.Context) (data T) {
 	err := context.ShouldBindJSON(&data)
 	if err != nil {
-		log.Fatal("BindJSON：", err)
+		Logger.Error("BindJSON：", zap.Error(err))
 	}
 	return
 }
@@ -28,8 +28,18 @@ func Validate(context *gin.Context, data any) {
 func BindJSONAndValid[T any](context *gin.Context) (data T) {
 	err := context.ShouldBindJSON(&data)
 	if err != nil {
-		log.Fatal("BindJSON：", err)
+		Logger.Error("BindJSONAndValid：", zap.Error(err))
+		panic(r.ERROR_REQUEST_PARAM)
 	}
 	Validate(context, &data)
 	return data
+}
+
+// GetFromContext 从 context 中获取数据
+func GetFromContext[T any](context *gin.Context, key string) (data T) {
+	value, exists := context.Get(key)
+	if !exists {
+		panic(r.ERROR_TOKEN_NOT_EXIST)
+	}
+	return value.(T)
 }

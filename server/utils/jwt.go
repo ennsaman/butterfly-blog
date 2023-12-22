@@ -19,6 +19,7 @@ var (
 type MyClaims struct {
 	UserId int    `json:"user_id"`
 	Role   string `json:"role"`
+	UUID   string `json:"uuid"`
 	jwt.StandardClaims
 }
 
@@ -31,11 +32,12 @@ func GetJWT() *MyJWT {
 }
 
 // GenToken 生成 JWT
-func (j *MyJWT) GenToken(userId int, role string) (string, error) {
+func (j *MyJWT) GenToken(userId int, role string, uuid string) (string, error) {
 	// 创建一个 MyClaims 实例
 	claims := MyClaims{
 		UserId: userId,
 		Role:   role,
+		UUID:   uuid,
 		StandardClaims: jwt.StandardClaims{
 			Issuer:    config.Conf.JWT.Issuer,
 			ExpiresAt: time.Now().Add(time.Duration(config.Conf.JWT.ExpireTime)).Unix(),

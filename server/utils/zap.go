@@ -20,7 +20,14 @@ func InitLogger() {
 		log.Println("当前目录中不存在日志文件夹，创建日志文件夹：", config.Conf.Zap.Directory)
 		_ = os.Mkdir(config.Conf.Zap.Directory, fs.ModePerm) // 创建日志文件夹，权限为 777
 	}
-	zapcore.NewCore(getEncoder(), getWriterSyncer(), getLevelPriority())
+	core := zapcore.NewCore(getEncoder(), getWriterSyncer(), getLevelPriority())
+	Logger = zap.New(core)
+
+	if config.Conf.Zap.ShowLine {
+		// 获取 调用的文件, 函数名称, 行号
+		Logger = Logger.WithOptions(zap.AddCaller())
+	}
+
 	log.Println("Logger 初始化成功")
 }
 

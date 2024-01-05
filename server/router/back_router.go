@@ -13,6 +13,8 @@ import (
 func BackRouter() http.Handler {
 	router := gin.New()
 
+	router.Use(middleware.Logger()) // 日志中间件
+
 	// 使用 cookie 存储引擎
 	store := cookie.NewStore([]byte(config.Conf.Session.Salt))
 	// session 存储时间跟 JWT 过期时间一致

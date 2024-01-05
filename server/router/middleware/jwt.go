@@ -19,7 +19,7 @@ func JWTAuth() gin.HandlerFunc {
 			return
 		}
 		// 分隔 token，判断格式是否正确
-		parts := strings.Split(token, "")
+		parts := strings.Split(token, " ")
 		if !(len(parts) == 2 && parts[0] == "Bearer") {
 			r.SendCode(context, r.ERROR_TOKEN_TYPE_WRONG)
 			context.Abort()
@@ -41,6 +41,7 @@ func JWTAuth() gin.HandlerFunc {
 		// 将请求信息保存到上下文 context，后续处理函数可以通过 context.Get("xxx") 获取对应的用户信息。
 		context.Set("user_id", claims.UserId)
 		context.Set("role", claims.Role)
+		context.Set("uuid", claims.UUID)
 		context.Next()
 	}
 }

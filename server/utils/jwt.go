@@ -40,7 +40,7 @@ func (j *MyJWT) GenToken(userId int, role string, uuid string) (string, error) {
 		UUID:   uuid,
 		StandardClaims: jwt.StandardClaims{
 			Issuer:    config.Conf.JWT.Issuer,
-			ExpiresAt: time.Now().Add(time.Duration(config.Conf.JWT.ExpireTime)).Unix(),
+			ExpiresAt: time.Now().Add(time.Duration(config.Conf.JWT.ExpireTime) * time.Hour).Unix(),
 		},
 	}
 	// 使用指定的签名方法创建签名对象

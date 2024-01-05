@@ -16,6 +16,11 @@ Redis:
   Password: # 密码
   DB: 11 # 库
 
+Session:
+  Name: "mySession"
+  Salt: "salt"
+  ExpireTime: 12
+
 JWT:
   Issuer: btf       # jwt签发者
   SecretKey: 123456 # jwt密钥

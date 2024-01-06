@@ -9,17 +9,17 @@ import (
 
 // Logger 日志中间件
 func Logger() gin.HandlerFunc {
-	return func(context *gin.Context) {
+	return func(ctx *gin.Context) {
 		start := time.Now()
-		context.Next()
+		ctx.Next()
 		cost := time.Since(start)
-		utils.Logger.Info(context.Request.URL.Path,
-			zap.Int("status", context.Writer.Status()),
-			zap.String("method", context.Request.Method),
-			zap.String("query", context.Request.URL.RawQuery),
-			zap.String("ip", context.ClientIP()),
-			zap.String("user-agent", context.Request.UserAgent()),
-			zap.String("errors", context.Errors.ByType(gin.ErrorTypePrivate).String()),
+		utils.Logger.Info(ctx.Request.URL.Path,
+			zap.Int("status", ctx.Writer.Status()),
+			zap.String("method", ctx.Request.Method),
+			zap.String("query", ctx.Request.URL.RawQuery),
+			zap.String("ip", ctx.ClientIP()),
+			zap.String("user-agent", ctx.Request.UserAgent()),
+			zap.String("errors", ctx.Errors.ByType(gin.ErrorTypePrivate).String()),
 			zap.Duration("cost", cost),
 		)
 	}

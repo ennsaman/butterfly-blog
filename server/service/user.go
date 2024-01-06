@@ -16,7 +16,7 @@ import (
 type User struct{}
 
 // Login 登录 TODO
-func (*User) Login(context *gin.Context, username, password string) (loginVo resp.LoginVo, code int) {
+func (*User) Login(ctx *gin.Context, username, password string) (loginVo resp.LoginVo, code int) {
 	// 获取用户认证信息
 	userAuth := dao.GetOne(model.UserAuth{}, "username = ?", username)
 	if userAuth.Id == 0 {
@@ -29,7 +29,7 @@ func (*User) Login(context *gin.Context, username, password string) (loginVo res
 	}
 
 	// 获取用户详细信息
-	userDetailDTO := convertUserDetailDTO(userAuth, context)
+	userDetailDTO := convertUserDetailDTO(userAuth, ctx)
 
 	// 生成 UUID
 	uuid := utils.Encryptor.MD5(userDetailDTO.IpAddress)
@@ -48,7 +48,7 @@ func (*User) Login(context *gin.Context, username, password string) (loginVo res
 	}, "ip_address", "ip_source")
 
 	// 保存用户信息到 Session 和 Redis
-	session := sessions.Default(context)
+	session := sessions.Default(ctx)
 	sessionInfoStr := utils.Json.Marshal(dto.SessionInfo{UserDetailDTO: userDetailDTO})
 	session.Set(KEY_USER+uuid, sessionInfoStr)
 	err = session.Save()
@@ -60,11 +60,11 @@ func (*User) Login(context *gin.Context, username, password string) (loginVo res
 }
 
 // Logout 登出
-func (u *User) Logout(context *gin.Context) {
+func (u *User) Logout(ctx *gin.Context) {
 	// 获取 UUID
-	uuid := utils.GetFromContext[string](context, "uuid")
+	uuid := utils.GetFromContext[string](ctx, "uuid")
 	// 删除 Session 中的用户信息
-	session := sessions.Default(context)
+	session := sessions.Default(ctx)
 	session.Delete(KEY_USER + uuid)
 	err := session.Save()
 	if err != nil {
@@ -88,14 +88,14 @@ func (*User) GetList(req req.GetUsers) resp.PageResult[[]resp.UserVO] {
 	}
 }
 
-func convertUserDetailDTO(userAuth model.UserAuth, context *gin.Context) dto.UserDetailDTO {
+func convertUserDetailDTO(userAuth model.UserAuth, ctx *gin.Context) dto.UserDetailDTO {
 	// 获取用户详细信息
 	userInfoId := userAuth.UserInfoId
 	userInfo := dao.GetOne(model.UserInfo{}, "id = ?", userInfoId)
 
 	// 填入角色 TODO
 
-	// 从 context 中获取用户登录相关信息 TODO
+	// 从 ctx 中获取用户登录相关信息 TODO
 
 	return dto.UserDetailDTO{
 		LoginVo: resp.LoginVo{

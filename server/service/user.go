@@ -4,6 +4,7 @@ import (
 	"blog-server/dao"
 	"blog-server/model"
 	"blog-server/model/dto"
+	"blog-server/model/req"
 	"blog-server/model/resp"
 	"blog-server/utils"
 	"blog-server/utils/r"
@@ -58,6 +59,7 @@ func (*User) Login(context *gin.Context, username, password string) (loginVo res
 	return userDetailDTO.LoginVo, r.SUCCESS
 }
 
+// Logout 登出
 func (u *User) Logout(context *gin.Context) {
 	// 获取 UUID
 	uuid := utils.GetFromContext[string](context, "uuid")
@@ -69,6 +71,21 @@ func (u *User) Logout(context *gin.Context) {
 		utils.Logger.Error("删除 Session 中的用户信息失败: ", zap.Error(err))
 	}
 	// 删除 Redis 中的用户信息 TODO
+}
+
+// GetList 获取用户列表
+func (*User) GetList(req req.GetUsers) resp.PageResult[[]resp.UserVO] {
+	// 获取记录数
+	count := userDao.GetCount(req)
+	// 获取用户列表
+	list := userDao.GetList(req)
+	// 返回
+	return resp.PageResult[[]resp.UserVO]{
+		PageSize: req.PageSize,
+		PageNum:  req.PageNum,
+		Total:    count,
+		List:     list,
+	}
 }
 
 func convertUserDetailDTO(userAuth model.UserAuth, context *gin.Context) dto.UserDetailDTO {

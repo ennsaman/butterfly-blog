@@ -17,14 +17,14 @@ Redis:
   DB: 11 # 库
 
 Session:
-  Name: "mySession"
-  Salt: "salt"
-  ExpireTime: 12
+  Name: "mySession" # 会话名
+  Salt: "salt"      # 盐值
+  ExpireTime: 12    # session过期时间
 
 JWT:
   Issuer: btf       # jwt签发者
   SecretKey: 123456 # jwt密钥
-  ExpireTime: 3600  # jwt过期时间
+  ExpireTime: 12  # jwt过期时间
 
 Zap:
   Level: "error"        # 日志级别: debug, info, warn, error, dpanic, panic, fatal, 默认 info

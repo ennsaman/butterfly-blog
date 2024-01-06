@@ -10,24 +10,24 @@ import (
 type UserAuth struct{}
 
 // Register 注册
-func (*UserAuth) Register(context *gin.Context) {
+func (*UserAuth) Register(ctx *gin.Context) {
 
 }
 
 // Login 登录
-func (*UserAuth) Login(context *gin.Context) {
+func (*UserAuth) Login(ctx *gin.Context) {
 	// 参数绑定校验 + 参数合法性校验
-	loginReq := utils.BindJSONAndValid[req.Login](context)
+	loginReq := utils.BindJSONAndValid[req.Login](ctx)
 	// 业务逻辑
-	loginVo, code := userService.Login(context, loginReq.Username, loginReq.Password)
+	loginVo, code := userService.Login(ctx, loginReq.Username, loginReq.Password)
 	// 返回数据
-	r.SendCodeWithData(context, code, loginVo)
+	r.SendCodeWithData(ctx, code, loginVo)
 }
 
 // Logout 退出登录
-func (*UserAuth) Logout(context *gin.Context) {
+func (*UserAuth) Logout(ctx *gin.Context) {
 	// 业务逻辑
-	userService.Logout(context)
+	userService.Logout(ctx)
 	// 返回数据
-	r.Success(context)
+	r.Success(ctx)
 }

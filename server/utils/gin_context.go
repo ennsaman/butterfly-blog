@@ -43,3 +43,13 @@ func GetFromContext[T any](context *gin.Context, key string) (data T) {
 	}
 	return value.(T)
 }
+
+// BindQuery Param 绑定
+func BindQuery[T any](ctx *gin.Context) (data T) {
+	if err := ctx.ShouldBindQuery(&data); err != nil {
+		Logger.Error("BindQuery：", zap.Error(err))
+		panic(r.ERROR_REQUEST_PARAM)
+	}
+	// TODO 检查是否有 PageSize 或 PageQuery 字段，并处理其值
+	return
+}

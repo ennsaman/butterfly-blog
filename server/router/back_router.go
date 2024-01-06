@@ -35,6 +35,12 @@ func BackRouter() http.Handler {
 
 	{
 		auth.GET("/logout", userAuthAPI.Logout) // 退出登录
+
+		// 用户模块
+		user := auth.Group("/user")
+		{
+			user.GET("/list", userAPI.GetList) // 用户列表
+		}
 	}
 
 	return router

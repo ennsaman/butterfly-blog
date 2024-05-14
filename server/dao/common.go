@@ -57,3 +57,17 @@ func Delete[T any](data T, query string, args ...any) {
 		panic(err)
 	}
 }
+
+// Count 通用计数
+func Count[T any](data T, query string, args ...any) int64 {
+	var count int64
+	db := DB.Model(&data)
+	if query == "" {
+		db = db.Where(query, args)
+	}
+	if err := db.Count(&count).Error; err != nil {
+		log.Println("计数失败：", err)
+		panic(err)
+	}
+	return count
+}

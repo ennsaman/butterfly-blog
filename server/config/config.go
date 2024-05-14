@@ -35,7 +35,7 @@ type Redis struct {
 type Session struct {
 	Name       string
 	Salt       string
-	ExpireTime int64
+	ExpireTime int
 }
 
 type JWT struct {
